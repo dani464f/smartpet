@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { FunnelProgress } from "@/components/funnel-progress";
@@ -24,30 +24,23 @@ function PostPurchaseContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("order_id") ?? "N/A";
 
-  const [purchasedProducts, setPurchasedProducts] = useState<Product[]>([]);
-  const [referralCode, setReferralCode] = useState("");
-  const [copied, setCopied] = useState(false);
-
-  useEffect(() => {
-    // Read purchased products from localStorage
+  const [purchasedProducts] = useState<Product[]>(() => {
+    if (typeof window === "undefined") return [];
     try {
-      const raw = localStorage.getItem("smartpet_order");
-      if (raw) {
-        const data = JSON.parse(raw) as { productIds: string[] };
-        const prods = data.productIds
-          .map((id: string) => getProduct(id))
-          .filter(Boolean) as Product[];
-        setPurchasedProducts(prods);
-      }
+      const raw = window.localStorage.getItem("smartpet_order");
+      if (!raw) return [];
+      const data = JSON.parse(raw) as { productIds: string[] };
+      return data.productIds
+        .map((id: string) => getProduct(id))
+        .filter(Boolean) as Product[];
     } catch {
-      // ignore parse errors
+      return [];
     }
-
-    // Generate a simple referral code
-    setReferralCode(
-      `SMARTPET-${Math.random().toString(36).substring(2, 8).toUpperCase()}`
-    );
-  }, []);
+  });
+  const [referralCode] = useState(
+    () => `SMARTPET-${Math.random().toString(36).substring(2, 8).toUpperCase()}`
+  );
+  const [copied, setCopied] = useState(false);
 
   const missingProducts = products.filter(
     (p) => !purchasedProducts.some((pp) => pp.id === p.id)

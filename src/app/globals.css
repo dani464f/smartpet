@@ -1,17 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
 @theme inline {
-  --color-primary: #2563eb;
-  --color-primary-dark: #1d4ed8;
-  --color-accent: #10b981;
-  --color-accent-dark: #059669;
-  --color-surface: #f8fafc;
-  --color-surface-alt: #f1f5f9;
-  --color-text: #0f172a;
-  --color-text-muted: #64748b;
-  --color-border: #e2e8f0;
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif;
+  --color-primary: #2f6fee;
+  --color-primary-dark: #1f56c2;
+  --color-accent: #14b87a;
+  --color-accent-dark: #109161;
+  --color-surface: #f7fafb;
+  --color-surface-alt: #ecf3f6;
+  --color-text: #112338;
+  --color-text-muted: #607487;
+  --color-border: #d6e1e8;
+  --font-sans: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
