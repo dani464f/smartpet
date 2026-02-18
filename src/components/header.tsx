@@ -1,50 +1,36 @@
 "use client";
 
+import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
-
-const navItems = [
-  { href: "#home", label: "Home" },
-  { href: "#shop", label: "Shop" },
-  { href: "#features", label: "Features" },
-  { href: "#reviews", label: "Reviews" },
-  { href: "#faq", label: "FAQ" },
-  { href: "#contact", label: "Contact" },
-];
 
 export function Header() {
   const { itemCount } = useCart();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-white/95 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3">
-        <a href="#home" className="flex items-center gap-2">
-          <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
-            YB
-          </span>
-          <div>
-            <p className="text-sm font-semibold text-text leading-tight">[Your Brand]</p>
-            <p className="text-xs text-text-muted leading-tight">Pet Tech</p>
-          </div>
-        </a>
-
-        <nav className="hidden items-center gap-5 text-sm md:flex">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="text-text-muted transition-colors hover:text-text"
-            >
-              {item.label}
-            </a>
-          ))}
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-border">
+      <div className="max-w-5xl mx-auto flex items-center justify-between px-4 py-3">
+        <Link href="/d" className="font-bold text-lg text-primary">
+          SmartPet
+        </Link>
+        <nav className="flex items-center gap-4 text-sm">
+          <Link
+            href="/sp"
+            className="text-text-muted hover:text-text transition-colors"
+          >
+            Products
+          </Link>
+          <Link
+            href="/op"
+            className="relative text-text-muted hover:text-text transition-colors"
+          >
+            Cart
+            {itemCount > 0 && (
+              <span className="absolute -top-2 -right-3 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                {itemCount}
+              </span>
+            )}
+          </Link>
         </nav>
-
-        <a
-          href="#shop"
-          className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-dark"
-        >
-          Cart ({itemCount})
-        </a>
       </div>
     </header>
   );
